@@ -1,0 +1,6 @@
+{
+  "connection_string": "define the connection string in each environment",
+  "cookie_key": "123456",
+  "google_client_ID": "11492226396-9i0512j8jpr69o644q1nc0vbmnbge93c.apps.googleusercontent.com", // This should not be publish in a public repo, but... :-)
+  "google_client_secret": "K6jUuUeZy9CCfmISMIS1hu6Y"// This should not be publish in a public repo, but... :-)
+}

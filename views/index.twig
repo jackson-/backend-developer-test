@@ -1,0 +1,19 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <p>Welcome to {{title}} {{user.username}}</p>
+  {% if not user %}
+  <p>
+    <a href="/auth/google"> Login</a>
+  </p>
+  {% else %}
+  <p>
+    <a href="/api-docs">  Api docs</a>
+  </p>
+  <p>
+    <a href="/auth/logout"> Logout</a>
+  </p>
+  {% endif %}
+
+{% endblock %}

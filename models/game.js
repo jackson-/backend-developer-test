@@ -5,11 +5,10 @@ const connectionString = config.get('connection_string')
 mongoose.connect(connectionString, { useNewUrlParser: true })
 
 const gameSchema = new Schema({
-  title: String,
+  title: { type: String, unique: true, required: true },
   description: String,
-  min_players: Number,
-  max_player: Number,
-  date: { type: Date, default: Date.now }
+  min_players: { type: Number, required: true },
+  max_players: { type: Number, required: true }
 })
 const Games = mongoose.model('Games', gameSchema)
 module.exports = Games

@@ -1,4 +1,4 @@
-const Game = require('../model/game')
+const Game = require('../models/game')
 
 const createGame = (req, res, next) => {
   const game = new Game(req.body)
@@ -12,7 +12,7 @@ const createGame = (req, res, next) => {
   })
 }
 const updateGame = (req, res, next) => {
-  Game.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, game) => {
+  Game.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, game) => {
     if (err) {
       next(err)
     } else {
@@ -22,7 +22,7 @@ const updateGame = (req, res, next) => {
 }
 
 const deleteGame = (req, res, next) => {
-  Game.remove({_id: req.params.id}, (err, game) => {
+  Game.remove({ _id: req.params.id }, (err, game) => {
     if (err) {
       next(err)
     } else {
@@ -42,7 +42,7 @@ const getAllGames = (req, res, next) => {
 }
 
 const getGameById = (req, res, next) => {
-  Game.findOne({_id: req.params.id}, function (err, game) {
+  Game.findOne({ _id: req.params.id }, function (err, game) {
     if (err) {
       next(err)
     } else {
