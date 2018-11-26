@@ -1,5 +1,6 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const uniqueArrayPlugin = require('mongoose-unique-array');
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     name: {
@@ -27,6 +28,9 @@ const userSchema = new Schema({
         required: [true, 'availability required'],
         default: false
     },
+    preferences: [{ type: Schema.Types.ObjectId, ref: 'Game', unique: true}]
 },{ timestamps: { createdAt: 'created_at' } });
+
+userSchema.plugin(uniqueArrayPlugin);
 
 module.exports = mongoose.model('User', userSchema);
