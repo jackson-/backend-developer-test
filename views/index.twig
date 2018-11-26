@@ -1,0 +1,18 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <p>Welcome to {{title}} {{user.username}}</p>
+  {% if not user %}
+  <p>
+    <a href="/auth/google"> Login with google</a>
+  </p>
+  {% else %}
+  <p>Please, be aware that the Web app client is still under construction ;) so the UI has very limited functions.<p>
+  <p>For now, please, use this id to modify your data through our <a href="/api-docs">api</a>: {{user.id}}</p>
+  <p>
+    Or if you are already done, you can also <a href="/auth/google/logout"> Logout</a>
+  </p>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,467 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Games API",
+    "description": "API created in order to provide basic CRUD for games",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/v0/api",
+  "tags": [
+    {
+      "name": "Games",
+      "description": "API for games in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/games": {
+      "post": {
+        "tags": [
+          "Games"
+        ],
+        "description": "Create new game in system",
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "game that we want to create",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New game is created",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "Get all games in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/games"
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}": {
+      "parameters": [
+        {
+          "name": "gameId",
+          "in": "path",
+          "required": true,
+          "description": "ID of game that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "Get game with given ID",
+        "responses": {
+          "200": {
+            "description": "game is found",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete game with given ID",
+        "tags": [
+          "Games"
+        ],
+        "responses": {
+          "200": {
+            "description": "game is deleted",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update game with give ID",
+        "tags": [
+          "Games"
+        ],
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "game with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "game is updated",
+            "schema": {
+              "$ref": "#/definitions/game"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "game that we want to create",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "user is found",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "user is deleted",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user is updated",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/interested/{gameId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that wants to find interested users",
+          "type": "string"
+        },
+        {
+          "name": "gameId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the game that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get users from given IDfor given game ID",
+        "responses": {
+          "200": {
+            "description": "users are found",
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }
+        }
+      }
+    },
+    "/gameRequests": {
+      "post": {
+        "tags": [
+          "GameRequests"
+        ],
+        "description": "Create new game request in system",
+        "parameters": [
+          {
+            "name": "gameRequests",
+            "in": "body",
+            "description": "gameRequests that we want to create",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New gameRrequests is created",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "GameRequests"
+        ],
+        "summary": "Get all game requests in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/gameRequests"
+            }
+          }
+        }
+      }
+    },
+    "/gameRequests/{gameRequestsId}": {
+      "parameters": [
+        {
+          "name": "gameRequestsId",
+          "in": "path",
+          "required": true,
+          "description": "ID of game request that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "GameRequests"
+        ],
+        "summary": "Get game requests with given ID",
+        "responses": {
+          "200": {
+            "description": "game request is found",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete game request with given ID",
+        "tags": [
+          "GameRequests"
+        ],
+        "responses": {
+          "200": {
+            "description": "game requests is deleted",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update game with give ID",
+        "tags": [
+          "GameRequests"
+        ],
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "game request with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "gameRequest is updated",
+            "schema": {
+              "$ref": "#/definitions/gameRequest"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "game": {
+      "required": [
+        "title",
+        "min_players",
+        "max_players"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "min_players": {
+          "type": "number"
+        },
+        "max_players": {
+          "type": "number"
+        }
+      }
+    },
+    "games": {
+      "type": "array",
+      "$ref": "#/definitions/game"
+    },
+    "user": {
+      "required": [
+        "title",
+        "min_players",
+        "max_players"
+      ],
+      "properties": {
+        "username": { "type": "string" },
+        "googleId": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type" : { "type": "string" },
+            "coordinates": { 
+              "type": "array", 
+              "items": {"type": "number"}
+            }
+          }
+        },
+        "games": { "type": "array", 
+          "items": {
+            "type": "string", 
+            "$ref": "#/definitions/game" 
+            }
+          },
+        "age": {"type": "number"},
+        "isHost": {"type": "boolean"}
+      }
+    },
+    "users": {
+      "type": "array",
+      "$ref": "#/definitions/user"
+    },
+    "gameRequest": {
+      "required": [
+        "sourceUser",
+        "targetUser",
+        "game"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "sourceUser": { "type": "string","$ref": "#/definitions/user" },
+        "targetUser": { "type": "string","$ref": "#/definitions/user" },
+        "game": { "type": "string","$ref": "#/definitions/game" },
+        "date": {"type": "string"}
+      }
+    },
+    "gameRequests": {
+      "type": "array",
+      "$ref": "#/definitions/gameRequest"
+    }
+  }
+}
