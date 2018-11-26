@@ -17,7 +17,8 @@ const userSchema = new Schema({
         unique: [true, 'Google ID already registered']
     },
     location: {
-        type:String,
+        type: { type: String },
+        coordinates: [Number],
     },
     age: {
         type:Number,
@@ -27,7 +28,7 @@ const userSchema = new Schema({
         required: [true, 'availability required'],
         default: false
     },
-    preferences: [{ type: Schema.Types.ObjectId, ref: 'Game'}]
+    preferences: [{ type: Schema.Types.ObjectId, ref: 'Game'}],
 },{ timestamps: { createdAt: 'created_at' } });
 
 
