@@ -16,6 +16,7 @@ mongoose.Promise = require('bluebird');
 mongoose.connect(mongodbUri, { useNewUrlParser: true });
 const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
+conn.collection("users").createIndex( { "location" : "2dsphere" } )
 
 // Middleware
 app.use(function (req, res, next) {
