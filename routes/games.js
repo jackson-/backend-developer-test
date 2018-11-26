@@ -20,7 +20,7 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .post('/listMatches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .get('/listMatches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
             res.status(200).send(match)
@@ -38,7 +38,7 @@ module.exports = router
     })
     .get('/listRequests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
-            const requests = await Request.find()
+            const requests = await Request.find({match: req.body.matchId})
             res.status(200).send(requests)
         } catch (e){
             res.status(400).send(e.message)
