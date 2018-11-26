@@ -5,7 +5,7 @@ const gamePreferenceSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: [true, 'userId required'],
-    }
+    },
     gameId: {
         type: Schema.Types.ObjectId,
         required: [true, 'gameId required'],

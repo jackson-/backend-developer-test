@@ -5,7 +5,7 @@ const matchPlayerSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: [true, 'userId required'],
-    }
+    },
     matchId: {
         type: Schema.Types.ObjectId,
         required: [true, 'matchId required'],

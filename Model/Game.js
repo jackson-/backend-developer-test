@@ -5,7 +5,7 @@ const gameSchema = new Schema({
     name: {
         type:String,
         required: [true, 'name required'],
-    }
+    },
     min_players: {
         type: Number,
         required: [true, 'minimum players required'],
