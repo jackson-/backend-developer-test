@@ -18,6 +18,7 @@ mongoose.connect(mongodbUri, { useNewUrlParser: true });
 const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
 
+// Middleware
 app.use(function (req, res, next) {
     let allowedOrigins = ['*'];  // list of url-s
     let origin = req.headers.origin;
@@ -36,32 +37,7 @@ app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send('Something broke!')
 });
-
-
-// ############# GOOGLE AUTHENTICATION ################
-// this will call passport-setup.js authentication in the config directory
-app.get('/auth/google', passport.authenticate('google', {
-    session: false,
-    scope: ['profile', 'email']
-}));
-
-// callback url upon successful google authentication
-app.get('/callback', passport.authenticate('google', {session: false}), (req, res) => {
-    authService.signToken(req, res);
-});
-
-// route to check token with postman.
-// using middleware to check for authorization header
-app.get('/verify', authService.checkTokenMW, (req, res) => {
-    authService.verifyToken(req, res);
-    if (null === req.authData) {
-        res.sendStatus(403);
-    } else {
-        res.json(req.authData);
-    }
-});
-
-
+app.use('/', require('./routes'))
 
 // start server after mongodb connection is verified.
 conn.once('open', function () {
