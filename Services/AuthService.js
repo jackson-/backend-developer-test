@@ -14,19 +14,19 @@ exports.checkTokenMW = (req, res, next) => {
 };
 
 // Verify Token validity and attach token data as request attribute
-exports.verifyToken = (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
+exports.verifyToken = (req, res, next) => {
+    jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
         if(err) {
             res.sendStatus(403);
         } else {
-            return req.authData = authData;
+            next()
         }
     })
 };
 
 // Issue Token
 exports.signToken = (req, res) => {
-    jwt.sign({userId: req.user._id}, 'secretkey', {expiresIn:'5 min'}, (err, token) => {
+    jwt.sign({userId: req.user._id}, process.env.SECRET_KEY, {expiresIn:'7d'}, (err, token) => {
         if(err){
             res.sendStatus(500);
         } else {

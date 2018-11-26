@@ -19,7 +19,7 @@ passport.use(
             return done(null, currentUser);
         } else {
             // register user and return
-            const newUser = await new User({email: email, googleId: profile.id}).save();
+            const newUser = await new User({name: displayName, email: email, googleId: profile.id}).save();
             return done(null, newUser);
         }
     }
