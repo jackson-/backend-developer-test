@@ -416,19 +416,26 @@
         "max_players"
       ],
       "properties": {
-        "username": { "type": "String" },
-        "googleId": "String",
+        "username": { "type": "string" },
+        "googleId": { "type": "string" },
         "location": {
-          "type": {
-            "type": "String"
-          },
-          "coordinates": {
-            "type": ["Number"]
+          "type": "object",
+          "properties": {
+            "type" : { "type": "string" },
+            "coordinates": { 
+              "type": "array", 
+              "items": {"type": "number"}
+            }
           }
         },
-        "games": [{ "type": "array", "$ref": "#/definitions/game" }],
-        "age": "Number",
-        "isHost": "Boolean"
+        "games": { "type": "array", 
+          "items": {
+            "type": "string", 
+            "$ref": "#/definitions/game" 
+            }
+          },
+        "age": {"type": "number"},
+        "isHost": {"type": "boolean"}
       }
     },
     "users": {
@@ -446,10 +453,10 @@
           "type": "string",
           "uniqueItems": true
         },
-        "sourceUser": { "type": "String","$ref": "#/definitions/user" },
-        "targetUser": { "type": "String","$ref": "#/definitions/user" },
-        "game": { "type": "String","$ref": "#/definitions/game" },
-        "date": {"type": "Date"}
+        "sourceUser": { "type": "string","$ref": "#/definitions/user" },
+        "targetUser": { "type": "string","$ref": "#/definitions/user" },
+        "game": { "type": "string","$ref": "#/definitions/game" },
+        "date": {"type": "string"}
       }
     },
     "gameRequests": {
