@@ -1,6 +1,8 @@
 // Many of these things should not be publish in a public repo, but... :-)
 {
-  "connection_string": "define the connection string in each environment",
+  "mongo_connection_string": "define the connection string in each environment",
+  "redis_url": "",
+  "redis_password": "",
   "cookie_key": "123456",
   "location_api_url": "http://api.ipstack.com/", 
   "api_key_location": "0a4021e981f0c3184f879955fbbaef8a", 

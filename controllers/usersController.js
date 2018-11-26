@@ -1,9 +1,19 @@
-const User = require('../models/user')
+const User = require('../models/userModel')
+// const config = require('config')
+// const redis = require('redis')
+// const options = {
+//   url: config.get('redis_url'),
+//   password: config.get('redis_password')
+// }
+// const clientRedis = redis.createClient(options)
+// const { promisify } = require('util')
+// const getAsync = promisify(clientRedis.get).bind(clientRedis)
+
 const locationDecorator = (user, req) => {
-  user.location = {
-    type: 'Point',
-    coordinates: [req.geoip.latitude, req.geoip.longitude]
-  }
+  // user.location = {
+  //   type: 'Point',
+  //   coordinates: [req.geoip.longitude, req.geoip.latitude]
+  // }
   return user
 }
 const createUser = (req, res, next) => {
@@ -42,7 +52,7 @@ const deleteUser = (req, res, next) => {
 }
 
 const getAllUsers = (req, res, next) => {
-  User.find().populate('games').exec(function (err, users) {
+  User.find().exec(function (err, users) {
     if (err) {
       next(err)
     } else {
@@ -61,10 +71,32 @@ const getUserById = (req, res, next) => {
   })
 }
 
+const getInterestedUsers = async (req, res, next) => {
+  try {
+    const userId = req.params.id
+    const gameId = req.params.gameId
+    const userLocation = [
+      53.5679386469575,
+      10.0117897303544
+    ]
+    const users = await User.findInterestedUsersForGame(userId, userLocation, gameId)
+    res.json(users)
+  } catch (e) {
+    next(e)
+  }
+
+  // const keyRedis = 'interested:' + userId + ':' + gameId
+  // const usersRedis = await getAsync(keyRedis)
+  // if (usersRedis) {
+  //   return res.json(usersRedis)
+  // } else {
+  // }
+}
 module.exports = {
   createUser,
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  getInterestedUsers
 }

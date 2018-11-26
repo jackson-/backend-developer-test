@@ -1,4 +1,4 @@
-const Game = require('../models/game')
+const Game = require('../models/gameModel')
 
 const createGame = (req, res, next) => {
   const game = new Game(req.body)

@@ -238,6 +238,38 @@
           }
         }
       }
+    },
+    "/users/{userId}/interested/{gameId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that wants to find interested users",
+          "type": "string"
+        },
+        {
+          "name": "gameId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the game that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get users from given IDfor given game ID",
+        "responses": {
+          "200": {
+            "description": "users are found",
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

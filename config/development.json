@@ -1,3 +1,5 @@
 {
-  "connection_string": "mongodb://feeld:feeld1234@ds115094.mlab.com:15094/feeld_games"
+  "mongo_connection_string": "mongodb://feeld:feeld1234@ds115094.mlab.com:15094/feeld_games",
+  "redis_url": "redis://redis-11639.c55.eu-central-1-1.ec2.cloud.redislabs.com:11639",
+  "redis_password": "r4VkcRgND9kMrbr7rpPXynvPuxVOS0Tl"
 }

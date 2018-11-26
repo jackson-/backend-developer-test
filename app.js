@@ -10,10 +10,11 @@ const bodyParser = require('body-parser')
 const config = require('config')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./docs/swagger.json')
-const indexRoutes = require('./routes/index')
-const gamesRoutes = require('./routes/games')
-const usersRoutes = require('./routes/users')
-const authRoutes = require('./routes/auth')
+const indexRoutes = require('./routes/indexRoutes')
+const gamesRoutes = require('./routes/gamesRoutes')
+const usersRoutes = require('./routes/usersRoutes')
+const gameRequestRoutes = require('./routes/gameRequestsRoutes')
+const authRoutes = require('./routes/authRoutes')
 const requireLogin = require('./middlewares/requireLogin')
 /**
  * EXPRESS APP
@@ -51,6 +52,7 @@ app.use('/', indexRoutes)
 app.use('/api-docs', requireLogin, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/v0/api/games', requireLogin, gamesRoutes)
 app.use('/v0/api/users', requireLogin, usersRoutes)
+app.use('/v0/api/game-requests', requireLogin, gameRequestRoutes)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -69,7 +71,7 @@ app.use(function (err, req, res, next) {
 })
 
 // Set up mongoose connection
-const connectionString = config.get('connection_string')
+const connectionString = config.get('mongo_connection_string')
 mongoose.connect(connectionString, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
