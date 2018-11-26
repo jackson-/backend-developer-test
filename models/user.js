@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const usersSchema = new Schema({
-  username: { type: String, unique: true },
-  email: { type: String, unique: true },
-  googleId: String,
-  password: String,
+  username: String,
+  googleId: { type: String, unique: true },
   location: {
     type: {
       type: String,
@@ -15,7 +13,10 @@ const usersSchema = new Schema({
       type: [Number]
     }
   },
-  games: [{ type: Schema.Types.ObjectId, ref: 'Games' }]
+  games: [{ type: Schema.Types.ObjectId, ref: 'Games' }],
+  age: Number,
+  isHost: Boolean
 })
 
+const 
 module.exports = mongoose.model('Users', usersSchema)

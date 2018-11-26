@@ -1,7 +1,15 @@
 const User = require('../models/user')
-
+const locationDecorator = (user, req) => {
+  user.location = {
+    type: 'Point',
+    coordinates: [req.geoip.latitude, req.geoip.longitude]
+  }
+  return user
+}
 const createUser = (req, res, next) => {
   const user = new User(req.body)
+  locationDecorator(user, req)
+
   user.save(function (err) {
     if (err) {
       console.log(JSON.stringify(err, null, 2))
@@ -12,10 +20,12 @@ const createUser = (req, res, next) => {
   })
 }
 const updateUser = (req, res, next) => {
-  User.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, user) => {
+  User.findByIdAndUpdate(req.params.id, req.body, { new: true, lean: true }, (err, user) => {
     if (err) {
       next(err)
     } else {
+      locationDecorator(user, req)
+      user.save()
       res.status(200).json(user)
     }
   })
@@ -32,7 +42,7 @@ const deleteUser = (req, res, next) => {
 }
 
 const getAllUsers = (req, res, next) => {
-  User.find(function (err, users) {
+  User.find().populate('games').exec(function (err, users) {
     if (err) {
       next(err)
     } else {

@@ -132,6 +132,112 @@
           }
         }
       }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "game that we want to create",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "user is found",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "user is deleted",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user is updated",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -164,6 +270,32 @@
     "games": {
       "type": "array",
       "$ref": "#/definitions/game"
+    },
+    "user": {
+      "required": [
+        "title",
+        "min_players",
+        "max_players"
+      ],
+      "properties": {
+        "username": { "type": "String" },
+        "googleId": "String",
+        "location": {
+          "type": {
+            "type": "String"
+          },
+          "coordinates": {
+            "type": ["Number"]
+          }
+        },
+        "games": [{ "type": "array", "$ref": "#/definitions/game" }],
+        "age": "Number",
+        "isHost": "Boolean"
+      }
+    },
+    "users": {
+      "type": "array",
+      "$ref": "#/definitions/user"
     }
   }
 }

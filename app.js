@@ -1,9 +1,10 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const createError = require('http-errors')
 const path = require('path')
 const logger = require('morgan')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const config = require('config')
@@ -44,16 +45,17 @@ app.use(passport.session())
 app.use('/auth', authRoutes)
 
 /**
- * SWAGGER
- */
-app.use('/api-docs', requireLogin, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-
-/**
  * ROUTES
  */
 app.use('/', indexRoutes)
+app.use('/api-docs', requireLogin, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/v0/api/games', requireLogin, gamesRoutes)
 app.use('/v0/api/users', requireLogin, usersRoutes)
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404))
+})
 
 // error handler
 app.use(function (err, req, res, next) {

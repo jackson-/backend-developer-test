@@ -16,7 +16,7 @@ router.get(
 
 router.get('/google/logout', (req, res) => {
   req.logout()
-  res.redirect('/login.html')
+  res.redirect('/')
 })
 
 router.get('/current_user', (req, res) => {
