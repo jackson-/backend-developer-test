@@ -1,40 +1,24 @@
 {
-  "name": "mongoose-passport-google-oauth",
+  "name": "fleet-backend",
   "version": "1.0.0",
-  "description": "Express & Mongoose with passport-google-oauth & passport-local-mongoose",
+  "description": "fleet-backend api",
   "main": "app.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js app.js",
-    "start": "cross-env NODE_ENV=production node app.js"
+    "start": "nodemon app.js"
   },
-  "keywords": [
-    "mongoose",
-    "mongodb",
-    "passport",
-    "node",
-    "express",
-    "pug",
-    "oauth",
-    "google"
-  ],
-  "author": "Jesper Orb",
+  "author": "Devin Jackson",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "compression": "^1.6.2",
-    "cookie-parser": "^1.4.3",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.2",
-    "express-session": "^1.15.2",
-    "helmet": "^3.5.0",
-    "mongoose": "^4.9.6",
-    "morgan": "^1.8.1",
-    "passport": "^0.3.2",
-    "passport-google-oauth": "^1.0.0",
-    "passport-local-mongoose": "^4.0.0",
+    "body-parser": "^1.18.2",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.13",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {
-    "cross-env": "^5.0.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.14.8"
   }
 }
