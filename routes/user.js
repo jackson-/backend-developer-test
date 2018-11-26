@@ -8,7 +8,7 @@ module.exports = router
         if(user){
             res.sendStatus(200);
         } else {
-            res.sendStatus(301)
+            res.sendStatus(400)
         }
     })
 
