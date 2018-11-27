@@ -47,7 +47,7 @@ module.exports = router
     .post('/updateRequest', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const {answer, matchId, requestId} = req.body
-            await Request.updateOne({_id: requestId}, {answer: answer})
+            await Request.updateOne({_id: requestId}, {answer})
             const request = await Request.findOne({_id: requestId})
             if(answer === true){
                 const match = await Match.findOne({ _id: matchId }).populate('game')
