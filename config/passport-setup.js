@@ -19,7 +19,8 @@ passport.use(
             return done(null, currentUser);
         } else {
             // register user and return
-            const newUser = await new User({name: displayName, email: email, googleId: profile.id}).save();
+            const newUser = await new User({name: displayName, email: email, googleId: profile.id, 
+            location: { type: "Point", coordinates: [ 0, 0 ] }}).save();
             return done(null, newUser);
         }
     }
