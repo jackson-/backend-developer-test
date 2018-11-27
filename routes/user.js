@@ -35,7 +35,7 @@ module.exports = router
                     coordinates: user.location.coordinates
                     },
                     distanceField: "dist.calculated",
-                    maxDistance: 10,
+                    maxDistance: 2,
                     spherical: true
                 }
             },
