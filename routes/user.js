@@ -32,10 +32,10 @@ module.exports = router
                 $geoNear: {
                     near: { 
                     type: "Point",
-                    coordinates: [ 75.7873, 26.9124]
+                    coordinates: user.location.coordinates
                     },
                     distanceField: "dist.calculated",
-                    maxDistance: 2,
+                    maxDistance: 10,
                     spherical: true
                 }
             },
