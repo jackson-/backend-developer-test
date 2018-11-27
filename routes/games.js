@@ -23,7 +23,7 @@ module.exports = router
     .get('/listMatches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
-            res.status(200).send(match)
+            res.status(200).send(matches)
         } catch (e){
             res.status(400).send(e.message)
         }        
