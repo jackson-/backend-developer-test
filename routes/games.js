@@ -3,15 +3,43 @@ const authService = require('../Services/AuthService');
 const {User, Game, Match, Request} = require('../Model');
 
 module.exports = router
-    .post('/createGame', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
-        const game = await new Game({...req.body}).save();
-        if(game){
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(400)
+    .get('/', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const games = await Game.find()
+            res.status(200).send(games)
+        } catch (e){
+            res.status(400).send(e.message)
         }
     })
-    .post('/createMatch', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .post('/', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const game = await new Game({...req.body}).save();
+            res.sendStatus(200);
+        } catch(e)
+            res.status(400).send(e.message)
+        }
+    })
+    .put('/:gameId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try{
+            const {gameId} = req.params
+            const {updates} = req.body
+            const game = await Game.findOneAndUpdate({ _id: gameId }, {...updates})
+            res.status(200).send(game);
+        } catch(e) {
+            res.status(400).send(e.message)
+        }
+    })
+    .delete('/:gameId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {gameId} = req.params
+            const {updates} = req.body
+            await Game.deleteOne({ _id: gameId })
+            res.sendStatus(200);
+        } catch(e) {
+            res.status(400).send(e.message)
+        }
+    })
+    .post('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try{
             const createdMatch = await new Match({...req.body}).save();
             const match = await Match.find({_id: createdMatch._id}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
@@ -20,7 +48,7 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .get('/listMatches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .get('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
             res.status(200).send(matches)
@@ -28,7 +56,7 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .post('/sendRequest', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .post('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const request = await new Request({...req.body}).save();
             res.status(200).send(request)
@@ -36,7 +64,7 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .get('/listRequests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .get('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const requests = await Request.find({match: req.body.matchId})
             res.status(200).send(requests)
@@ -44,9 +72,10 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .post('/updateRequest', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .put('/requests/:requestId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
-            const {answer, matchId, requestId} = req.body
+            const {requestId} = req.params
+            const {answer, matchId} = req.body
             await Request.updateOne({_id: requestId}, {answer})
             const request = await Request.findOne({_id: requestId})
             if(answer === true){
