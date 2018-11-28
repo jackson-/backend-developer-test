@@ -4,18 +4,33 @@ const { User } = require("../Model");
 const mongoose = require("mongoose");
 
 module.exports = router
-  .post(
-    "/update",
-    [authService.checkTokenMW, authService.verifyToken],
-    async (req, res) => {
-      const user = await User.findOneAndUpdate(
-        { _id: req.body.user._id },
-        { ...req.body.updates }
-      );
-      if (user) {
+  .get("/", [authService.checkTokenMW, authService.verifyToken],async (req, res) => {
+      try {
+        const users = await User.find();
+        return res.status(200).send(users);
+      } catch (e) {
+        return res.status(400).send(e.message);
+      }
+    }
+  )
+  .put("/:userId",[authService.checkTokenMW, authService.verifyToken],async (req, res) => {
+      try {
+        const user = await User.findOneAndUpdate(
+          { _id: req.params.userId },
+          { ...req.body.updates }
+        );
+        res.status(200).send(user);
+      } catch(e) {
+        res.status(400).send(e.message);
+      }
+    }
+  )
+  .delete("/:userId",[authService.checkTokenMW, authService.verifyToken],async (req, res) => {
+      try {
+        await User.deleteOne({ _id: req.params.userId });
         res.sendStatus(200);
-      } else {
-        res.sendStatus(400);
+      } catch(e) {
+        res.status(400).send(e.message);
       }
     }
   )
