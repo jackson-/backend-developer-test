@@ -116,4 +116,3 @@ The *game* property should be a game ID and the *host* should be the creating us
 You may have noticed that I dont have a controllers folder. This is something I usally do. In more production level projects I break out my endpoint functions into controllers. 
 
 Thank you for taking the time out of your busy schedule to look this over. I know this takes a lot out of the day. That being said, I really look forward to hearing back from yo!~
-
