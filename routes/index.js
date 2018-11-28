@@ -5,3 +5,5 @@ module.exports = api
   .use('/auth', require('./auth'))
   .use('/users', require('./user'))
   .use('/games', require('./games'))
+  .use('/requests', require('./requests'))
+  .use('/matches', require('./matches'))
