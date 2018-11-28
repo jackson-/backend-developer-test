@@ -64,6 +64,14 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
+    .get('/matches/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const requests = await Request.find({match: req.body.matchId})
+            res.status(200).send(requests)
+        } catch (e){
+            res.status(400).send(e.message)
+        }        
+    })
     .post('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try{
             const createdMatch = await new Match({...req.body}).save();
@@ -92,18 +100,27 @@ module.exports = router
             res.status(400).send(e.message)
         }       
     })
-    .post('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .get('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
-            const request = await new Request({...req.body}).save();
+            const requests = await Request.find()
+            res.status(200).send(requests)
+        } catch (e){
+            res.status(400).send(e.message)
+        }        
+    })
+    .get('/requests/:requestId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {requestId} = req.params
+            const request = await Request.find({_id: requestId})
             res.status(200).send(request)
         } catch (e){
             res.status(400).send(e.message)
         }        
     })
-    .get('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+    .post('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
-            const requests = await Request.find({match: req.body.matchId})
-            res.status(200).send(requests)
+            const request = await new Request({...req.body}).save();
+            res.status(200).send(request)
         } catch (e){
             res.status(400).send(e.message)
         }        
@@ -134,5 +151,13 @@ module.exports = router
             return res.status(400).send(e.message)
         }       
     })
-    
+    .delete('/requests/:requestId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {requestId} = req.params
+            await Request.deleteOne({ _id: requestId })
+            res.sendStatus(200);
+        } catch(e) {
+            res.status(400).send(e.message)
+        }       
+    })
 
