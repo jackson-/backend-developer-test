@@ -11,10 +11,19 @@ module.exports = router
             res.status(400).send(e.message)
         }
     })
+    .get('/:gameId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {gameId} = req.params
+            const game = await Game.find({_id: gameId})
+            res.status(200).send(game)
+        } catch (e){
+            res.status(400).send(e.message)
+        }
+    })
     .post('/', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const game = await new Game({...req.body}).save();
-            res.sendStatus(200);
+            res.status(200).send(game);
         } catch(e)
             res.status(400).send(e.message)
         }
@@ -32,12 +41,28 @@ module.exports = router
     .delete('/:gameId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
             const {gameId} = req.params
-            const {updates} = req.body
             await Game.deleteOne({ _id: gameId })
             res.sendStatus(200);
         } catch(e) {
             res.status(400).send(e.message)
         }
+    })
+    .get('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
+            res.status(200).send(matches)
+        } catch (e){
+            res.status(400).send(e.message)
+        }        
+    })
+    .get('/matches/:matchId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {matchId} = req.params
+            const match = await Match.find({_id: matchId}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
+            res.status(200).send(match)
+        } catch (e){
+            res.status(400).send(e.message)
+        }        
     })
     .post('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try{
@@ -48,13 +73,24 @@ module.exports = router
             res.status(400).send(e.message)
         }        
     })
-    .get('/matches', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
-        try {
-            const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
-            res.status(200).send(matches)
-        } catch (e){
+    .put('/matches/:matchId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try{
+            const {matchId} = req.params
+            const {updates} = req.body
+            const match = await Match.findOneAndUpdate({ _id: matchId }, {...updates})
+            res.status(200).send(match);
+        } catch(e) {
             res.status(400).send(e.message)
-        }        
+        }       
+    })
+    .delete('/matches/:matchId', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
+        try {
+            const {matchId} = req.params
+            await Match.deleteOne({ _id: matchId })
+            res.sendStatus(200);
+        } catch(e) {
+            res.status(400).send(e.message)
+        }       
     })
     .post('/requests', [authService.checkTokenMW, authService.verifyToken], async (req, res) => {
         try {
