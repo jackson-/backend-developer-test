@@ -12,9 +12,9 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
         try {
-            const {requestId} = req.params
-            const request = await Request.find({_id: requestId})
-            res.status(200).send(request)
+            const {userId} = req.params
+            const user = await User.find({_id: userId})
+            res.status(200).send(user)
         } catch (e){
             res.status(400).send(e.message)
         }        
@@ -56,8 +56,8 @@ exports.getSimilarPlayers = async (req, res) => {
 
 exports.createOne = async (req, res) => {
         try {
-            const request = await new Request({...req.body}).save();
-            res.status(200).send(request)
+            const user = await new User({...req.body}).save();
+            res.status(200).send(user)
         } catch (e){
             res.status(400).send(e.message)
         }        

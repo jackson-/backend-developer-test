@@ -21,7 +21,8 @@ exports.getOne = async (req, res) => {
 
 exports.getRequestsForMatch = async (req, res) => {
         try {
-            const requests = await Request.find({match: req.body.matchId})
+            const {matchId} = req.params
+            const requests = await Request.find({match: matchId})
             res.status(200).send(requests)
         } catch (e){
             res.status(400).send(e.message)

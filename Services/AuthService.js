@@ -30,7 +30,7 @@ exports.signToken = (req, res) => {
         if(err){
             res.sendStatus(500);
         } else {
-            res.json({token});
+            res.json({user: req.user, token});
         }
     });
 }
