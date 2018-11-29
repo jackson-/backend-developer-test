@@ -2,7 +2,6 @@ const {User, Game, Match, Request} = require('../Model');
 
 exports.getAllOpen = async (req, res) => {
         try {
-            console.log("HERE")
             const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
             res.status(200).send(matches)
         } catch (e){

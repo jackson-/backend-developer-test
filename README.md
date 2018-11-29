@@ -54,7 +54,7 @@ After creating your user and getting your auth token you can do all the basic RE
 
 **/users/:userId** - PUT - This endpoint is used to update any properties on a user. The input looks like this:  
 ```
-{ user: { _id: String}, updates: {...} }
+{ updates: {...} }
 ``` 
 The *updates* object should have keys of the properties you want to change and the associated values you want to change it to.
 
@@ -63,11 +63,9 @@ The *updates* object should have keys of the properties you want to change and t
 **/users/similarPlayers** - GET - This endpoint is used to list players that are interested in the same games as you sorted by distance. The input looks like this:  
 ```
 { 
-    user: { _id: String, location: {    coordinates: [Number, Number] } }, preferences: [String] 
+    userId: String
 }
-```  
-The *preferences* array should be an array of Game IDs. I used the "geoNear" aggregator to sort by distance.
-
+``` 
 
 **/users/addPreference** - PUT - This endpoint is used to add a game preference to a user. The input looks like this:  
 ```
@@ -113,7 +111,6 @@ Now that we've created some games and added them as preferences, we can start cr
 {
     game: String,
     host: String,
-    players: [String]
 }
 ```
 The *game* property should be a game ID and the *host* should be the creating user ID. The *players* array should only have one user ID in it, which is the host ID.
