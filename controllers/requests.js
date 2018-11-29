@@ -1,6 +1,6 @@
 const {User, Game, Match, Request} = require('../Model');
 
-exports.getAll = async (req, res) => async (req, res) => {
+exports.getAll = async (req, res) => {
         try {
             const requests = await Request.find()
             res.status(200).send(requests)
@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => async (req, res) => {
 exports.getOne = async (req, res) => {
         try {
             const {requestId} = req.params
-            const request = await Request.find({_id: requestId})
+            const request = await Request.findOne({_id: requestId})
             res.status(200).send(request)
         } catch (e){
             res.status(400).send(e.message)

@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
 exports.getOne = async (req, res) => {
         try {
             const {userId} = req.params
-            const user = await User.find({_id: userId})
+            const user = await User.findOne({_id: userId})
             res.status(200).send(user)
         } catch (e){
             res.status(400).send(e.message)
@@ -22,9 +22,8 @@ exports.getOne = async (req, res) => {
 
 exports.getSimilarPlayers = async (req, res) => {
       try {
-        const { user } = req.body;
-        const user_id = mongoose.Types.ObjectId(user._id);
-        const pref_ids = user.preferences.map((p) => mongoose.Types.ObjectId(p))
+        const { userId } = req.body;
+        const user = await User.findOne({_id: userId})
         const players = await User.aggregate([
             {
                 $geoNear: {
@@ -39,12 +38,12 @@ exports.getSimilarPlayers = async (req, res) => {
             },
             {
                 $match: {
-                    _id: { $ne: user_id },
+                    _id: { $ne: userId },
                 },
             },
             {
                 $match: {
-                    preferences: { $in: pref_ids },
+                    preferences: { $in: user.preferences },
                 },
             },
         ]);

@@ -2,6 +2,7 @@ const {User, Game, Match, Request} = require('../Model');
 
 exports.getAllOpen = async (req, res) => {
         try {
+            console.log("HERE")
             const matches = await Match.find({open: true}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
             res.status(200).send(matches)
         } catch (e){
@@ -22,7 +23,7 @@ exports.getOne = async (req, res) => {
 exports.getRequestsForMatch = async (req, res) => {
         try {
             const {matchId} = req.params
-            const requests = await Request.find({match: matchId})
+            const requests = await Request.findOne({match: matchId})
             res.status(200).send(requests)
         } catch (e){
             res.status(400).send(e.message)
@@ -31,7 +32,7 @@ exports.getRequestsForMatch = async (req, res) => {
 
 exports.createOne = async (req, res) => {
         try{
-            const createdMatch = await new Match({...req.body}).save();
+            const createdMatch = await new Match({...req.body, players: [req.body.host]}).save();
             const match = await Match.find({_id: createdMatch._id}).populate('players', ["name", "email", "location", "preferences", "age", "available"])
             res.status(200).send(match)
         }catch (e){

@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
 exports.getOne = async (req, res) => {
         try {
             const {gameId} = req.params
-            const game = await Game.find({_id: gameId})
+            const game = await Game.findOne({_id: gameId})
             res.status(200).send(game)
         } catch (e){
             res.status(400).send(e.message)
