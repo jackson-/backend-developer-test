@@ -1,10 +1,16 @@
 # Backend Developer Coding Challenge
+## Project Explanation
+When envisioning the task laid out before me and thinking of a database schema, I pictured a online shooter game. Any online shooter game has multiple games in it like Team Deathmatch, Free-for-all, or Capture the Flag. The same way our app has Chess, Risk, and Settlers of Catan.
+Online shooters can also add more game modes as time goes on the same way we can add board games.  
+
+For this model to work we must have the idea of a Match model. Something that creates an instance of a game, holds all the players, and says who the host for that match is. Players can create matches and become the host to accept and deny join requests. Once the match is at full capacity it is blocked from accepting anymore.
 
 ## Demo API
 https://floating-gorge-72290.herokuapp.com/
 
 ## Installation
 `npm i` or `yarn`
+
 
 ## How to run
 Run mongo in the background on another terminal window
@@ -20,13 +26,16 @@ Create a .env file on the top level and fill it with the variables below:
 
 After filling out your env you can run the API with `yarn dev` or `npm run dev`
 
-## Explanation
-When envisioning the task laid out before me and thinking of a database schema, I pictured a online shooter game. Any online shooter game has multiple games in it like Team Deathmatch, Free-for-all, or Capture the Flag. The same way our app has Chess, Risk, and Settlers of Catan.
-Online shooters can also add more game modes as time goes on the same way we can add board games.  
+## How to authenticate use the API
+The first step in using the API is to create a user for yourself and get an authentication token to access the API. Most of the API endpoints are secured by a token check. If you don't send a verified token in the headers you will be denied the requested resources. To get your token and create a user, you must go to http://<BASE_URL>/auth/google in your browser with the server running. This will take you to the Google sign in screen. After signing in, you will see a token on the screen like this:  
 
-For this model to work we must have the idea of a Match model. Something that creates an instance of a game, holds all the players, and says who the host for that match is. Players can create matches and become the host to accept and deny join requests. Once the match is at full capacity it is blocked from accepting anymore.
+![token](token.png)  
 
-### Endpoints
+When making requests to the API take this token and use it in the Authorization header of your requests like so:  
+`Authorization: Bearer <token>`
+
+
+### Endpoints & App Flow
 #### Auth
 **/auth/google** - This endpoint must be traveled to using the browser. You will have to sign into your google account and give the app access to your email and profile.  
 

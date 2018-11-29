@@ -5,6 +5,6 @@ const requestsController = require("../controllers/requests")
 module.exports = router
     .get('/', [authService.checkTokenMW, authService.verifyToken], requestsController.getAll)
     .get('/:requestId', [authService.checkTokenMW, authService.verifyToken], requestsController.getOne)
-    .post('/', [authService.checkTokenMW, authService.verifyToken], requestsController.creatOne)
+    .post('/', [authService.checkTokenMW, authService.verifyToken], requestsController.createOne)
     .put('/:requestId', [authService.checkTokenMW, authService.verifyToken], requestsController.updateOne)
     .delete('/:requestId', [authService.checkTokenMW, authService.verifyToken], requestsController.deleteOne)
